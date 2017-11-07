@@ -9,7 +9,7 @@ function AutosController() {
   // Filter / Search
   var autosElem = document.getElementById('autos-list')
   var autosFormElem = document.getElementById('add-auto-form')
-  var showButton = document.getElementById('show-button')
+  var showButtonAuto = document.getElementById('show-button-auto')
   function drawAutos() {
     // WHERE ARE ALL THE AUTOS?
     var autos = autosService.getAutos()
@@ -48,13 +48,13 @@ function AutosController() {
   
   this.showAddAutoForm = function showAddAutoForm() {
     if (formstate) {
-      showButton.innerText = 'Add Listing'
-      showButton.className = 'btn btn-info'
+      showButtonAuto.innerText = 'Add Listing'
+      showButtonAuto.className = 'btn btn-info'
       autosFormElem.classList.add('hidden')
       formstate = false
     } else {
-      showButton.innerText = 'Cancel'
-      showButton.className = 'btn btn-danger'
+      showButtonAuto.innerText = 'Cancel'
+      showButtonAuto.className = 'btn btn-danger'
       autosFormElem.classList.remove('hidden')
       formstate = true
     }

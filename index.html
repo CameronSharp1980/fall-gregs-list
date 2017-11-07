@@ -14,7 +14,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-                <button id="show-button" class="btn btn-info" onclick="app.controllers.autosCtrl.showAddAutoForm()">Add A Listing</button>
+                <button id="show-button-auto" class="btn btn-info" onclick="app.controllers.autosCtrl.showAddAutoForm()">Add Auto listing</button>
+                <button id="show-button-animal" class="btn btn-info" onclick="app.controllers.animalsCtrl.showAddAnimalForm()">Add Animal listing</button>
+                <button id="show-button-property" class="btn btn-info" onclick="app.controllers.propertiesCtrl.showAddPropertyForm()">Add Property listing</button>
             </div>
         </div>
         <div class="row">
@@ -73,8 +75,152 @@
                     </div>
                 </form>
             </div>
+            <div class="col-sm-6 col-sm-offset-3 hidden" id="add-animal-form">
+                <form class="form" onsubmit="app.controllers.animalsCtrl.addAnimal(event)">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="species">Species:</label>
+                        <input type="text" name="species" class="form-control" placeholder="species">
+                    </div>
+                    <div class="form-group">
+                        <label for="breed">Breed:</label>
+                        <input type="text" name="breed" class="form-control" placeholder="breed">
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Sex:</label>
+                        <input type="text" name="sex" class="form-control" placeholder="sex">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="text" name="age" class="form-control" placeholder="age">
+                    </div>
+                    <div class="form-group">
+                        <label for="color">color:</label>
+                        <input type="text" name="color" class="form-control" placeholder="color">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">price:</label>
+                        <input type="text" name="price" class="form-control" placeholder="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ailments">Ailments:</label>
+                        <input type="text" name="ailments" class="form-control" placeholder="ailments">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" class="form-control" placeholder="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" name="location" class="form-control" placeholder="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact:</label>
+                        <input type="text" name="contact" class="form-control" placeholder="contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="img">Image:</label>
+                        <input type="text" name="img" class="form-control" placeholder="img">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit">Add Animal</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-sm-offset-3 hidden" id="add-property-form">
+                <form class="form" onsubmit="app.controllers.propertiesCtrl.addProperty(event)">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zoning">Zoning:</label>
+                        <input type="text" name="zoning" class="form-control" placeholder="zoning">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="breed">model:</label>
+                        <input type="text" name="breed" class="form-control" placeholder="breed">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="squareFeet">Square Footage:</label>
+                        <input type="text" name="squareFeet" class="form-control" placeholder="squareFeet">
+                    </div>
+                    <div class="form-group">
+                        <label for="constructionDate">Construction Date:</label>
+                        <input type="text" name="constructionDate" class="form-control" placeholder="constructionDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="color">color:</label>
+                        <input type="text" name="color" class="form-control" placeholder="color">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">price:</label>
+                        <input type="text" name="price" class="form-control" placeholder="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="condition">condition:</label>
+                        <input type="text" name="condition" class="form-control" placeholder="condition">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">description:</label>
+                        <input type="text" name="description" class="form-control" placeholder="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">location:</label>
+                        <input type="text" name="location" class="form-control" placeholder="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">contact:</label>
+                        <input type="text" name="contact" class="form-control" placeholder="contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="img">img:</label>
+                        <input type="text" name="img" class="form-control" placeholder="img">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit">Add Property</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="row" id="autos-list">
+            <!-- <div class="col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3>CAR TITLE</h3>
+                        <h6>LOCATION</h6>
+                    </div>
+                    <div class="panel-body text-center">
+                        <img src="//placehold.it/200x200">
+                        <h4>Make - Model</h4>
+                    </div>
+                    <div class="panel-footer">
+                        <h5>$ 7230.67</h5>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row" id="animals-list">
+            <!-- <div class="col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3>CAR TITLE</h3>
+                        <h6>LOCATION</h6>
+                    </div>
+                    <div class="panel-body text-center">
+                        <img src="//placehold.it/200x200">
+                        <h4>Make - Model</h4>
+                    </div>
+                    <div class="panel-footer">
+                        <h5>$ 7230.67</h5>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row" id="properties-list">
             <!-- <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
