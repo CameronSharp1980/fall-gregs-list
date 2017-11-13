@@ -11,9 +11,15 @@ function AnimalsController() {
     var animalsElem = document.getElementById('animals-list')
     var animalsFormElem = document.getElementById('add-animal-form')
     var showButtonAnimal = document.getElementById('show-button-animal')
-    function drawAnimals() {
+
+    function getAnimals() {
+        animalsService.getAnimals(drawAnimals)
+    }
+
+    function drawAnimals(animals) {
+
         // WHERE ARE ALL THE ANIMALS?
-        var animals = animalsService.getAnimals()
+
         var template = ''
         for (var i = 0; i < animals.length; i++) {
             var animal = animals[i];
@@ -21,6 +27,7 @@ function AnimalsController() {
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
+                    <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.animalsCtrl.removeAnimal(${i})"></i>
                         <h3>${animal.title}</h3>
                         <h6>${animal.location}</h6>
                     </div>
@@ -41,9 +48,8 @@ function AnimalsController() {
     this.addAnimal = function addAnimal(event) {
         event.preventDefault()
         var form = event.target
-        animalsService.addAnimal(form)
+        animalsService.addAnimal(form, getAnimals)
         animalsFormElem.classList.toggle('hidden', true)
-        drawAnimals()
     }
     var formstate = false
 
@@ -61,5 +67,9 @@ function AnimalsController() {
         }
     }
 
-    drawAnimals()
+    this.removeAnimal = function removeAnimal(index) {
+        animalsService.removeAnimal(index, getAnimals)
+    }
+
+    getAnimals()
 }

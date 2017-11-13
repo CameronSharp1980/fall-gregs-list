@@ -10,9 +10,15 @@ function AutosController() {
   var autosElem = document.getElementById('autos-list')
   var autosFormElem = document.getElementById('add-auto-form')
   var showButtonAuto = document.getElementById('show-button-auto')
-  function drawAutos() {
+
+  function getAutos() {
+    autosService.getAutos(drawAutos)
+  }
+
+  function drawAutos(autos) {
+
     // WHERE ARE ALL THE AUTOS?
-    var autos = autosService.getAutos()
+
     var template = ''
     for (var i = 0; i < autos.length; i++) {
       var auto = autos[i];
@@ -20,6 +26,7 @@ function AutosController() {
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
+                        <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.autosCtrl.removeAuto(${i})"></i>
                         <h3>${auto.title}</h3>
                         <h6>${auto.location}</h6>
                     </div>
@@ -40,12 +47,11 @@ function AutosController() {
   this.addAuto = function addAuto(event) {
     event.preventDefault()
     var form = event.target
-    autosService.addAuto(form)
+    autosService.addAuto(form, getAutos)
     autosFormElem.classList.toggle('hidden', true)
-    drawAutos()
   }
   var formstate = false
-  
+
   this.showAddAutoForm = function showAddAutoForm() {
     if (formstate) {
       showButtonAuto.innerText = 'Add Listing'
@@ -60,5 +66,10 @@ function AutosController() {
     }
   }
 
-  drawAutos()
+  this.removeAuto = function removeAuto(index) {
+    autosService.removeAuto(index, getAutos)
+  }
+
+  getAutos()
+
 }
