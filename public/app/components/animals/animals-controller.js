@@ -27,7 +27,7 @@ function AnimalsController() {
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                    <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.animalsCtrl.removeAnimal(${i})"></i>
+                    <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.animalsCtrl.removeAnimal('${animal._id}')"></i>
                         <h3>${animal.title}</h3>
                         <h6>${animal.location}</h6>
                     </div>
@@ -67,8 +67,8 @@ function AnimalsController() {
         }
     }
 
-    this.removeAnimal = function removeAnimal(index) {
-        animalsService.removeAnimal(index, getAnimals)
+    this.removeAnimal = function removeAnimal(id) {
+        animalsService.removeAnimal(id, getAnimals)
     }
 
     getAnimals()

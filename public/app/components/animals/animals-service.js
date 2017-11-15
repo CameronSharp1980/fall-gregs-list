@@ -16,7 +16,6 @@ function AnimalsService() {
         { id: 5, fuel: 'Gas', cylinders: 10 },
         { id: 6, fuel: 'Diesel', cylinders: 12 },
     ]
-    var id = 0;
     function Animal(config) {
         this.title = config.title.value
         this.species = config.species.value
@@ -30,7 +29,6 @@ function AnimalsService() {
         this.location = config.location.value
         this.contact = config.contact.value
         this.img = config.img.value
-        this.id = id++
     }
 
     function logError(err) {
@@ -53,6 +51,7 @@ function AnimalsService() {
             .fail(logError)
     }
 
+    // NOT CURRENTY BEING USED?
     this.getAnimal = function getAnimal(id) {
         for (var i = 0; i < animals.length; i++) {
             var animal = animals[i];
@@ -70,9 +69,9 @@ function AnimalsService() {
             .fail(logError)
     }
 
-    this.removeAnimal = function removeAnimal(index, getAnimals) {
+    this.removeAnimal = function removeAnimal(id, getAnimals) {
         $.ajax({
-            url: baseUrl + '/' + index,
+            url: baseUrl + '/' + id,
             method: 'DELETE'
         })
             .then(getAnimals)

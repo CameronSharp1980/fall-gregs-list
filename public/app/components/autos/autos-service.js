@@ -3,6 +3,7 @@ function AutosService() {
 
     // WHATS PRIVATE?
     // DUMMY DATA
+    // SHOULD GET REPLACED WITH WHATS ON THE SERVER
     var autos = []
 
     // GET THE DATA FROM THE SERVER WHEN THE APPLICATION STARTS
@@ -16,7 +17,7 @@ function AutosService() {
         { id: 5, fuel: 'Gas', cylinders: 10 },
         { id: 6, fuel: 'Diesel', cylinders: 12 },
     ]
-    var id = 0;
+
     function Auto(config) {
         this.title = config.title.value
         this.make = config.make.value
@@ -30,7 +31,6 @@ function AutosService() {
         this.condition = config.condition.value
         this.description = config.description.value
         this.img = config.img.value
-        this.id = id++
     }
 
     function logError(err) {
@@ -53,6 +53,7 @@ function AutosService() {
             .fail(logError)
     }
 
+    // NOT CURRENTLY BEING USED?
     this.getAuto = function getAuto(id) {
         for (var i = 0; i < autos.length; i++) {
             var auto = autos[i];
@@ -70,9 +71,9 @@ function AutosService() {
             .fail(logError)
     }
 
-    this.removeAuto = function removeAuto(index, getAutos) {
+    this.removeAuto = function removeAuto(id, getAutos) {
         $.ajax({
-            url: baseUrl + '/' + index,
+            url: baseUrl + '/' + id,
             method: 'DELETE'
         })
             .then(getAutos)

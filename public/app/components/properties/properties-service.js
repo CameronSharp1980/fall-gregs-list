@@ -1,21 +1,12 @@
 function PropertiesService() {
+    var baseUrl = 'http://localhost:3000/api/properties'
+
     // WHATS PRIVATE?
     // DUMMY DATA
-    var properties = [{
-        id: 'asdfkljsdafdsaflkj239023u9402u',
-        zoning: 'Industrial',
-        squareFeet: 10000,
-        constructionDate: 1987,
-        color: 'Yellow',
-        price: 180000,
-        condition: 'Dilapidated',
-        description: 'Fixer-upper',
-        engineId: '3', //GOOD QUESTION
-        location: 'TimBuckToo',
-        contact: 'testproperty@properties.property',
-        img: '//loremflickr.com/200/200/building',
-        title: 'Your New Property'
-    }]
+    var properties = []
+
+    // GET THE DATA FROM THE SERVER WHEN THE APPLICATION STARTS
+    // ALSO NEED TO GET THE DATA ANY TIME I CHANGE THE DATA
 
     var engines = [
         { id: 1, fuel: 'Gas', cylinders: 4 },
@@ -25,7 +16,6 @@ function PropertiesService() {
         { id: 5, fuel: 'Gas', cylinders: 10 },
         { id: 6, fuel: 'Diesel', cylinders: 12 },
     ]
-    var id = 0;
     function Property(config) {
         this.title = config.title.value
         this.zoning = config.zoning.value
@@ -38,15 +28,29 @@ function PropertiesService() {
         this.location = config.location.value
         this.contact = config.contact.value
         this.img = config.img.value
-        this.id = id++
+    }
+
+    function logError(err) {
+        console.error(err)
     }
 
     // PUBLIC?
 
-    this.getProperties = function getProperties() {
-        return properties
+    this.getProperties = function getProperties(cb) {
+        if (!cb || typeof cb != 'function') { return console.error('error: I need a callback to run') }
+        // FIRST TASK IS TO REQUEST THE DATA FROM THE SERVER (ASYNC)
+        // THE DATA FROM THE SERVER
+        // GIVE THE CONTROLLER WHAT IS WANTS
+        $.get(baseUrl)
+            .then(res => {
+                // SECOND TASK IS TO UPDATE THE LOCAL PROPERTIES ARRAY WITH
+                properties = res
+                cb(properties)
+            })
+            .fail(logError)
     }
 
+    // NOT CURRENTLY BEING USED?
     this.getProperty = function getProperty(id) {
         for (var i = 0; i < properties.length; i++) {
             var property = properties[i];
@@ -56,8 +60,21 @@ function PropertiesService() {
         }
     }
 
-    this.addProperty = function addProperty(form) {
+    this.addProperty = function addProperty(form, getProperties) {
+        if (!form || !getProperties || typeof getProperties != 'function') { return console.error('Unable to add property', 'bad parameters', form, getProperties) }
         var newProperty = new Property(form)
-        properties.unshift(newProperty)
+        $.post(baseUrl, newProperty)
+            .then(getProperties)
+            .fail(logError)
     }
+
+    this.removeProperty = function removeProperty(id, getProperties) {
+        $.ajax({
+            url: baseUrl + '/' + id,
+            method: 'DELETE'
+        })
+            .then(getProperties)
+            .fail(logError)
+    }
+
 }
