@@ -3,6 +3,6 @@ var app = {
         autosCtrl: new AutosController(),
         animalsCtrl: new AnimalsController(),
         propertiesCtrl: new PropertiesController(),
-        // servicesCtrl: new ServicesController()
+        servicesCtrl: new ServicesController()
     }
 }

@@ -1,18 +1,25 @@
 function ServicesController() {
     var servicesService = new ServicesService()
 
+
     // Buttons
-    // Add New Auto
-    // Delete Auto
+    // Add New Service
+    // Delete Service
     // Report Flag
     // View More
     // Filter / Search
     var servicesElem = document.getElementById('services-list')
     var servicesFormElem = document.getElementById('add-service-form')
     var showButtonService = document.getElementById('show-button-service')
-    function drawServices() {
+
+    function getServices() {
+        servicesService.getServices(drawServices)
+    }
+
+    function drawServices(services) {
+
         // WHERE ARE ALL THE SERVICES?
-        var services = servicesService.getServices()
+
         var template = ''
         for (var i = 0; i < services.length; i++) {
             var service = services[i];
@@ -20,6 +27,7 @@ function ServicesController() {
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
+                    <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.servicesCtrl.removeService('${service._id}')"></i>
                         <h3>${service.title}</h3>
                         <h6>${service.location}</h6>
                     </div>
@@ -39,9 +47,8 @@ function ServicesController() {
     this.addService = function addService(event) {
         event.preventDefault()
         var form = event.target
-        servicesService.addService(form)
+        servicesService.addService(form, getServices)
         servicesFormElem.classList.toggle('hidden', true)
-        drawServices()
     }
     var formstate = false
 
@@ -59,5 +66,10 @@ function ServicesController() {
         }
     }
 
-    drawServices()
+    this.removeService = function removeService(id) {
+        servicesService.removeService(id, getServices)
+    }
+
+    getServices()
+
 }
